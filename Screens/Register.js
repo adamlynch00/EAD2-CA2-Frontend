@@ -3,6 +3,8 @@ import React, { useState, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import AuthContext from '../context/AuthContext'
 import SelectDropdown from 'react-native-select-dropdown'
+import { BASE_URL } from '../config';
+import axios from 'axios';
 
 const Register = ({navigation}) => {
 
@@ -12,6 +14,25 @@ const Register = ({navigation}) => {
     const roles = [ "Student", "Teacher" ]
 
     const {Register} = useContext(AuthContext)
+
+    const HandleRegister = async (username, password, role) => {
+      const data = {
+          "username": username,
+          "password": password,
+          "role": role
+      };
+
+      axios.post(`${BASE_URL}/auth/register`, data)
+          .then( (res) => {
+              if (res.status === 201) {
+                console.log(res.data);
+                navigation.navigate("Login")
+              }
+          })
+          .catch( (err) => {
+              console.log(err.response.data);
+          });
+    }
   
   return (
     <View style={styles.container}>
@@ -54,7 +75,7 @@ const Register = ({navigation}) => {
       </View>
 
       <TouchableOpacity style={styles.registerBtn}
-        onPress={() => Register(username, role, password)}>
+        onPress={() => HandleRegister(username, password, role)}>
         <Text style={styles.registerText}>Register</Text>
       </TouchableOpacity>
 
