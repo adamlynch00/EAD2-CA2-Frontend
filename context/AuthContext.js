@@ -8,19 +8,40 @@ export const AuthContext = createContext();
 export const AuthProvider = ({children}) => {
 
     const Register = (username, role, password) => {
-        axios.post(`${BASE_URL}/api/auth/register`, {
-            username, role, password
-        }).then(res => {
-            let userInfo = res.data;
-            console.log(userInfo);
+        const data = {
+            username: username,
+            password: password,
+            role: role
+        }
 
-        }).catch(e=> {
-            console.log(`register error ${e}`)
-        })
-
+        axios.post(`http://10.0.2.2:3000/api/auth/register`, data)
+            .then( (res) => {
+                console.log(res);
+            })
+            .catch( (err) => {
+                console.log(`register error ${err}`)
+            });
     }
+
+    const SendLogin = async (username, password) => {
+        const data = {
+            "username": username,
+            "password": password
+        };
+  
+        console.log(data);
+  
+        axios.post(`http://10.0.2.2:3000/api/auth/login`, data)
+            .then( (res) => {
+                console.log(res.data);
+            })
+            .catch( (err) => {
+                console.log(err.request);
+            });
+      }
+
     return(
-    <AuthContext.Provider  value={{Register}}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{Register}}>{children}</AuthContext.Provider>
 )}
 
 export default AuthContext

@@ -1,12 +1,15 @@
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable } from 'react-native'
 import React, { useContext, useState } from 'react'
 import { useNavigation } from '@react-navigation/native'
+import axios from 'axios';
 import AuthContext from '../context/AuthContext';
 
 
 const Login = () => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+
+    const {SendLogin} = useContext(AuthContext)
 
     const navigation = useNavigation();
 
@@ -34,11 +37,12 @@ const Login = () => {
         />
       </View>
       
-      <TouchableOpacity style={styles.loginBtn}>
+      <TouchableOpacity style={styles.loginBtn}
+        onPress={() => SendLogin(username, password)}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
 
-      <Text>Dont have an account</Text>
+      <Text>Dont have an account?c</Text>
       <View>
         <Pressable onPress={() =>{
               navigation.navigate("Register")

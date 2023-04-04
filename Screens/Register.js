@@ -6,7 +6,7 @@ import SelectDropdown from 'react-native-select-dropdown'
 
 const Register = ({navigation}) => {
 
-    const [role, setRole] = useState(null);
+    const [role, setRole] = useState(0);
     const [password, setPassword] = useState(null);
     const [username, setUsername] = useState(null);
     const roles = [ "Student", "Teacher" ]
@@ -33,7 +33,7 @@ const Register = ({navigation}) => {
           buttonStyle={styles.inputView}
           buttonTextStyle={styles.TextInput}
           defaultValueByIndex={0}
-          onSelect={selectedItem => setRole(selectedItem)}
+          onSelect={ (selectedItem, index) => setRole(index)}
           buttonTextAfterSelection={selectedItem => {
             return selectedItem
           }}
@@ -53,11 +53,12 @@ const Register = ({navigation}) => {
         />
       </View>
 
-      <TouchableOpacity style={styles.registerBtn}>
+      <TouchableOpacity style={styles.registerBtn}
+        onPress={() => Register(username, role, password)}>
         <Text style={styles.registerText}>Register</Text>
       </TouchableOpacity>
 
-      <Text>Already have an account</Text>
+      <Text>Already have an account?</Text>
       <View>
         <Pressable onPress={() =>{
               navigation.navigate("Login")
