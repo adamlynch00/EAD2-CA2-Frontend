@@ -1,56 +1,122 @@
-import { Button, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable } from 'react-native'
+import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable } from 'react-native'
 import React, { useState, useContext } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import AuthContext from '../context/AuthContext'
+import SelectDropdown from 'react-native-select-dropdown'
 
 const Register = ({navigation}) => {
 
     const [role, setRole] = useState(null);
     const [password, setPassword] = useState(null);
-    const [username, setUserame] = useState(null);
-    
-
-    
+    const [username, setUsername] = useState(null);
+    const roles = [ "Student", "Teacher" ]
 
     const {Register} = useContext(AuthContext)
-
-
-    
+  
   return (
-    <View>
-      <View>
-      
-        
-      <TextInput value={username} 
-        placeholder='Enter username'
-        onChangeText={text => setUserame(text)}/>
+    <View style={styles.container}>
 
-        <TextInput value={role} 
-        placeholder='Enter Role'
-        onChangeText={text => setRole(text)}/>
+      <Image style={styles.image} source={require("../assets/sh-logo-transparent.png")} />
 
-        <TextInput value={password} 
-        placeholder='Enter Password' 
-        onChangeText={text => setPassword(text)}
-        secureTextEntry/>
-
-        <Button title='Register'onPress={() => {
-            Register(username, password, role)
-        }}/>
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          value={username} 
+          placeholder='Enter username'
+          onChangeText={text => setUsername(text)}
+        />
       </View>
+
+      <View>
+        <SelectDropdown
+          data={roles}
+          buttonStyle={styles.inputView}
+          buttonTextStyle={styles.TextInput}
+          defaultValueByIndex={0}
+          onSelect={selectedItem => setRole(selectedItem)}
+          buttonTextAfterSelection={selectedItem => {
+            return selectedItem
+          }}
+          rowTextForSelection={item => {
+            return item
+          }}
+        />
+      </View>
+
+      <View style={styles.inputView}>
+        <TextInput 
+          style={styles.TextInput}
+          value={password} 
+          placeholder='Enter Password' 
+          onChangeText={text => setPassword(text)}
+          secureTextEntry
+        />
+      </View>
+
+      <TouchableOpacity style={styles.registerBtn}>
+        <Text style={styles.registerText}>Register</Text>
+      </TouchableOpacity>
+
       <Text>Already have an account</Text>
       <View>
         <Pressable onPress={() =>{
               navigation.navigate("Login")
             }}>
                 <Text>Login</Text>
-
         </Pressable>
       </View>
+      
     </View>
   )
 }
 
 export default Register
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  inputView: {
+    backgroundColor: "#FFF",
+    borderRadius: 30,
+    width: "70%",
+    height: 45,
+    marginBottom: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    borderColor: "#BBB",
+    borderWidth: 1
+  },
+  TextInput: {
+    height: 50,
+    flex: 1,
+    padding: 10,
+    fontSize: 15,
+    textAlignVertical: "center",
+    textAlign: "center"
+  },
+  image: {
+    width: "60%",
+    resizeMode: "contain",
+    height: 150
+  },
+  container: {
+    flex: 1,
+    backgroundColor: "#EEE",
+    alignItems: "center",
+    paddingTop: "15%"
+  },
+  registerBtn: {
+    width: "80%",
+    borderRadius: 25,
+    height: 50,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 20,
+    backgroundColor: "#398378",
+    borderColor: "#BBB",
+    borderWidth: 1,
+    marginBottom: 20
+  },
+  registerText: {
+    color: "#FFF",
+    fontWeight: "bold"
+  }
+})
