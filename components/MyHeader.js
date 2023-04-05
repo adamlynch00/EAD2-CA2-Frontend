@@ -1,14 +1,21 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const MyHeader = () => {
+    const navigation = useNavigation();
+
     return (
         <View style={styles.container}>
 
             <Image style={styles.image} source={require("../assets/sh-logo-white-transparent.png")} />
 
-            <TouchableOpacity style={styles.signOutBtn}>
+            <TouchableOpacity style={styles.signOutBtn}
+                onPress={() =>{
+                    navigation.navigate("Login")
+                }}
+            >
                 <Text style={styles.signOutText}>Sign Out</Text>
                 <Icon style={styles.signOutIcon} name="log-out-outline" size={30} color="#FFF" />
             </TouchableOpacity>

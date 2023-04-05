@@ -9,6 +9,8 @@ import { BASE_URL } from '../config';
 const Login = () => {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+    const [accessToken, setAccessToken] = useState('');
+    const [role, setRole] = useState('');
 
     const navigation = useNavigation();
 
@@ -18,14 +20,19 @@ const Login = () => {
           "password": password
       };
 
-      axios.post(`${BASE_URL}/auth/login`, data)
-          .then( (res) => {
+      await axios.post(`${BASE_URL}/auth/login`, data)
+          .then( async (res) => {
               if (res.status === 200) {
-                AsyncStorage.setItem("AccessToken", res.data);
+                await AsyncStorage.setItem("accessToken", res.data.accessToken);
+                await AsyncStorage.setItem("role", res.data.role.toString());
+
+                setAccessToken(res.data.accessToken);
+                setRole(res.data.role);
+
                 navigation.navigate("Home");
               }
               else {
-                console.log("Failed to apply access token - Status " + result.status)
+                console.log("Failed to apply access token/role - Status " + result.status)
               }
           })
           .catch( (err) => {
@@ -62,7 +69,7 @@ const Login = () => {
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
 
-      <Text>Dont have an account?c</Text>
+      <Text>Dont have an account?</Text>
       <View>
         <Pressable onPress={() =>{
               navigation.navigate("Register")
