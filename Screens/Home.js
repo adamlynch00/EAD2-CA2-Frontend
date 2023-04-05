@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, View, ActivityIndicator, TouchableOpacity } from 'react-native'
 import { React, useEffect, useState} from 'react'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
@@ -18,28 +18,27 @@ const Home = () => {
   const navigation = useNavigation();
 
   useEffect(() => {
-
-    async function loadData () {
-      setLoading(true);
-      const accessToken = await AsyncStorage.getItem("accessToken");
-      const role = await AsyncStorage.getItem("role");
-      
-      setAccessToken(accessToken);
-      setRole(role);
-
-      if (role && accessToken) {
-        if (role === "0") {
-          await getJoinedModules(accessToken);
-        }
-        else if (role === "1") {
-          await getOwnedModules(accessToken);
-        }
-      }
-      setLoading(false);
-    };
-
     loadData();
   }, []);
+
+  async function loadData () {
+    setLoading(true);
+    const accessToken = await AsyncStorage.getItem("accessToken");
+    const role = await AsyncStorage.getItem("role");
+    
+    setAccessToken(accessToken);
+    setRole(role);
+
+    if (role && accessToken) {
+      if (role === "0") {
+        await getJoinedModules(accessToken);
+      }
+      else if (role === "1") {
+        await getOwnedModules(accessToken);
+      }
+    }
+    setLoading(false);
+  };
 
   const getJoinedModules = async(token) => {
     await axios.get(`${BASE_URL}/user/joined-modules`, {
@@ -73,6 +72,10 @@ const Home = () => {
     })
   }
 
+  const handleModuleSelect = (moduleId) => {
+    navigation.navigate("Module", { "moduleId": moduleId });
+  }
+
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -95,7 +98,9 @@ const Home = () => {
         <View style={styles.modulesWrapper}>
           <View style={styles.modules}>
             {modules.map((item, index) => (
-              <ModuleOverview key={index} moduleName={modules[index].name} moduleId={modules[index].moduleId} />
+              <TouchableOpacity key={index} onPress={() => handleModuleSelect(item.moduleId)}>
+                <ModuleOverview moduleName={item.name} moduleId={item.moduleId} />
+              </TouchableOpacity>
             ))}
           </View>
         </View>
