@@ -4,6 +4,8 @@ import axios from 'axios';
 import { React, useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Section from '../components/Section.js';
+import {Dimensions} from 'react-native';
+import AddBtn from '../components/AddBtn.js';
 
 import { BASE_URL } from '../config';
 
@@ -59,7 +61,7 @@ const Module = ({ route }) => {
   }
 
   return (
-    <View>
+    <View style={styles.container}>
 
       <MyHeader />
 
@@ -77,6 +79,17 @@ const Module = ({ route }) => {
           </View>
         </View>
       </ScrollView>
+      
+      {role !== null && role === "1" ? 
+        <View style={styles.addBtn}>
+            <AddBtn />
+        </View>
+        :
+        null
+      }
+
+      
+      
     </View>
   )
 }
@@ -100,5 +113,11 @@ const styles = StyleSheet.create({
         paddingTop: 14,
         paddingLeft: 14,
         fontWeight: "bold"
+    },
+    addBtn: {
+        position: 'absolute',
+        left: Dimensions.get('window').width - 70,
+        top: "90%",
+        width: '100%',
     }
 })

@@ -2,8 +2,10 @@ import { Pressable, ScrollView, StyleSheet, Text, View, ActivityIndicator, Touch
 import { React, useEffect, useState} from 'react'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
+import {Dimensions} from 'react-native';
 
-import MyHeader from '../components/MyHeader.js'
+import MyHeader from '../components/MyHeader.js';
+import AddBtn from '../components/AddBtn.js';
 import ModuleOverview from '../components/ModuleOverview.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -105,6 +107,10 @@ const Home = () => {
           </View>
         </ScrollView>
 
+        <View style={styles.addBtn}>
+          <AddBtn />
+        </View>
+
       </View>
     
   );
@@ -122,5 +128,11 @@ const styles = StyleSheet.create({
   },
   modules: {
     marginTop: 30
+  },
+  addBtn: {
+    position: 'absolute',
+    left: Dimensions.get('window').width - 70,
+    top: "90%",
+    width: '100%',
   }
 })
