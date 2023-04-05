@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Pressable, ScrollView, StyleSheet, Text, View, ActivityIndicator } from 'react-native'
 import { React, useEffect, useState} from 'react'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
@@ -13,6 +13,7 @@ const Home = () => {
   const[accessToken, setAccessToken] = useState('');
   const[role, setRole] = useState('');
   const[loading, setLoading] = useState();
+  const[modules, setModules] = useState([]);
 
   const navigation = useNavigation();
 
@@ -47,7 +48,9 @@ const Home = () => {
       }
     })
     .then( (res) => {
-      console.log(res.data);
+      if (res.status === 200) {
+        setModules(res.data);
+      }
     })
     .catch( (err) => {
       console.log(err);
@@ -61,11 +64,21 @@ const Home = () => {
       }
     })
     .then( (res) => {
-      console.log(res.data);
+      if (res.status === 200) {
+        setModules(res.data);
+      }
     })
     .catch( (err) => {
       console.log(err);
     })
+  }
+
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" color="#0000ff" />
+      </View>
+    );
   }
 
   return (
@@ -78,12 +91,12 @@ const Home = () => {
           contentContainerStyle={{flexGrow: 1}}
           keyboardShouldPersistTaps='handled'
         >
-
+        
         <View style={styles.modulesWrapper}>
           <View style={styles.modules}>
-            <ModuleOverview />
-            <ModuleOverview />
-            <ModuleOverview />
+            {modules.map((item, index) => (
+              <ModuleOverview key={index} moduleName={modules[index].name} moduleId={modules[index].moduleId} />
+            ))}
           </View>
         </View>
 

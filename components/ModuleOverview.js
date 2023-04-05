@@ -1,11 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import React from 'react';
 
-const ModuleOverview = () => {
+const ModuleOverview = (props) => {
     return (
         <View style={styles.module}>
-            <Text style={styles.title}>Module Title</Text>
-            <Text style={styles.subtitle}>Module ID</Text>
+            <Text style={styles.title}>{props.moduleName}</Text>
+            <Text style={styles.subtitle}>{props.moduleId}</Text>
         </View>
     );
 };
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         color: "black"
     },
     subtitle: {
-        fontSize: 16,
+        fontSize: 12,
         height: 20,
     },
 });
