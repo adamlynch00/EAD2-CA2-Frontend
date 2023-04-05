@@ -10,12 +10,18 @@ import ModuleOverview from '../components/ModuleOverview.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { BASE_URL } from '../config';
+import CreateModule from '../components/CreateModule.js';
+import JoinModule from '../components/JoinModule.js';
 
 const Home = () => {
   const[accessToken, setAccessToken] = useState('');
   const[role, setRole] = useState('');
   const[loading, setLoading] = useState();
   const[modules, setModules] = useState([]);
+  const [createModalVisible, setCreateModalVisible] = useState(false);
+  const [modalName, setModuleName] = useState('');
+  const [joinModalVisible, setJoinModalVisible] = useState(false);
+  const [modalId, setModuleId] = useState('');
 
   const navigation = useNavigation();
 
@@ -78,6 +84,33 @@ const Home = () => {
     navigation.navigate("Module", { "moduleId": moduleId });
   }
 
+  const toggleCreateModal = () => {
+    setCreateModalVisible(!createModalVisible);
+  }
+
+  const handleCreateModalSubmit = (value) => {
+    setModuleName(value);
+    toggleCreateModal();
+  }
+
+  const toggleJoinModal = () => {
+    setJoinModalVisible(!joinModalVisible);
+  }
+
+  const handleJoinModalSubmit = (value) => {
+    setModuleId(value);
+    toggleJoinModal();
+  }
+
+  const handleAddBtnPress = () => {
+    if (role === "0") {
+      toggleJoinModal();
+    }
+    else if (role === "1") {
+      toggleCreateModal();
+    }
+  }
+
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -108,8 +141,12 @@ const Home = () => {
         </ScrollView>
 
         <View style={styles.addBtn}>
-          <AddBtn />
+          <AddBtn onPress={() => handleAddBtnPress()} />
         </View>
+
+        <CreateModule visible={createModalVisible} onClose={handleCreateModalSubmit} />
+
+        <JoinModule visible={joinModalVisible} onClose={handleJoinModalSubmit} />
 
       </View>
     

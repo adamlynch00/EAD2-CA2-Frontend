@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Section from '../components/Section.js';
 import {Dimensions} from 'react-native';
 import AddBtn from '../components/AddBtn.js';
+import CreateModule from '../components/CreateModule.js';
 
 import { BASE_URL } from '../config';
 
@@ -82,14 +83,12 @@ const Module = ({ route }) => {
       
       {role !== null && role === "1" ? 
         <View style={styles.addBtn}>
-            <AddBtn />
+            <AddBtn onPress={toggleModal} />
         </View>
         :
         null
       }
 
-      
-      
     </View>
   )
 }
