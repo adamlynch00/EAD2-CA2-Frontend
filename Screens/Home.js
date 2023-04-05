@@ -21,7 +21,7 @@ const Home = () => {
   const [createModalVisible, setCreateModalVisible] = useState(false);
   const [modalName, setModuleName] = useState('');
   const [joinModalVisible, setJoinModalVisible] = useState(false);
-  const [modalId, setModuleId] = useState('');
+  const [moduleId, setModuleId] = useState('');
 
   const navigation = useNavigation();
 

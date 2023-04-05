@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Section from '../components/Section.js';
 import {Dimensions} from 'react-native';
 import AddBtn from '../components/AddBtn.js';
-import CreateModule from '../components/CreateModule.js';
+import CreateSection from '../components/CreateSection.js';
 
 import { BASE_URL } from '../config';
 
@@ -16,6 +16,9 @@ const Module = ({ route }) => {
   const[module, setModule] = useState(null);
   const[sections, setSections] = useState([]);
   const[loading, setLoading] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [sectionTitle, setSectionTitle] = useState('');
+  const [sectionBody, setSectionBody] = useState('');
 
   const { moduleId } = route.params;
 
@@ -53,6 +56,18 @@ const Module = ({ route }) => {
     setLoading(false);
   };
 
+  const toggleModal = () => {
+    setModalVisible(!modalVisible);
+  }
+
+  const handleModalSubmit = (title, body) => {
+    setSectionTitle(title);
+    setSectionBody(body);
+    console.log("title: " + title);
+    console.log("body: " + body);
+    toggleModal();
+  }
+
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -88,6 +103,8 @@ const Module = ({ route }) => {
         :
         null
       }
+
+      <CreateSection visible={modalVisible} onClose={handleModalSubmit} />
 
     </View>
   )
