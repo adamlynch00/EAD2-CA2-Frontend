@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
+import { StyleSheet, Text,  View } from 'react-native';
 import React from 'react';
 
 const ModuleOverview = (props) => {

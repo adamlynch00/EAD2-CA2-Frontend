@@ -94,17 +94,15 @@ const Home = () => {
           contentContainerStyle={{flexGrow: 1}}
           keyboardShouldPersistTaps='handled'
         >
-        
-        <View style={styles.modulesWrapper}>
-          <View style={styles.modules}>
-            {modules.map((item, index) => (
-              <TouchableOpacity key={index} onPress={() => handleModuleSelect(item.moduleId)}>
-                <ModuleOverview moduleName={item.name} moduleId={item.moduleId} />
-              </TouchableOpacity>
-            ))}
+          <View style={styles.modulesWrapper}>
+            <View style={styles.modules}>
+              {modules.map((item, index) => (
+                <TouchableOpacity key={index} onPress={() => handleModuleSelect(item.moduleId)}>
+                  <ModuleOverview moduleName={item.name} moduleId={item.moduleId} />
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
-        </View>
-
         </ScrollView>
 
       </View>
