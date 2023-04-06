@@ -43,7 +43,14 @@ const Module = ({ route }) => {
       .then( (res) => {
         if (res.status === 200) {
             setModule(res.data);
-            setSections(res.data.sections.$values);
+
+            const sections = res.data.sections.$values;
+
+            const sortedSections = sections.sort((a, b) => {
+              return new Date(a.dueDate) - new Date(b.dueDate);
+            });
+
+            setSections(sortedSections);
         }
         else {
             console.log(`Error - Status ${res.status}`);
@@ -107,7 +114,7 @@ const Module = ({ route }) => {
         <View style={styles.itemsWrapper}>
           <View style={styles.items}>
             {sections.map((item, index) => (
-              <Section key={index} title={item.title} body={item.body}></Section>
+              <Section key={index} title={item.title} body={item.body} date={item.dueDate}></Section>
             ))}
           </View>
         </View>
