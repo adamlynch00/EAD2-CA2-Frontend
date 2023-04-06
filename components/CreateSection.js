@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Modal, TextInput, Button, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
-const CreateSection = ({ visible, onClose }) => {
+const CreateSection = ({ visible, onClose, onSubmit }) => {
   const [sectionTitle, setSectionTitle] = useState('');
   const [sectionBody, setSectionBody] = useState('');
 
@@ -14,7 +14,7 @@ const CreateSection = ({ visible, onClose }) => {
   }
 
   const handleSubmit = () => {
-    onClose(sectionTitle, sectionBody);
+    onSubmit(sectionTitle, sectionBody);
   }
 
   const handleBackdropPress = () => {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Modal, TextInput, Button, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
-const JoinModule = ({ visible, onClose }) => {
+const JoinModule = ({ visible, onClose, onSubmit }) => {
   const [moduleId, setModuleId] = useState('');
 
   const handleInputChange = (text) => {
@@ -9,7 +9,7 @@ const JoinModule = ({ visible, onClose }) => {
   }
 
   const handleSubmit = () => {
-    onClose(moduleId);
+    onSubmit(moduleId);
   }
 
   const handleBackdropPress = () => {

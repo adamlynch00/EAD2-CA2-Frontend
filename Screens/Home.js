@@ -90,6 +90,23 @@ const Home = () => {
 
   const handleCreateModalSubmit = (value) => {
     setModuleName(value);
+    
+    const data = {
+      Name: value
+    }
+
+    axios.post(`${BASE_URL}/module/create`, data, {
+      headers: {
+        Authorization: `bearer ${accessToken}`
+      }
+    })
+    .then( () => {
+      loadData();
+    })
+    .catch( (err) => {
+      console.log(err);
+    })
+
     toggleCreateModal();
   }
 
@@ -99,6 +116,23 @@ const Home = () => {
 
   const handleJoinModalSubmit = (value) => {
     setModuleId(value);
+    
+    const data = {
+      moduleID: value
+    }
+
+    axios.post(`${BASE_URL}/module/join`, data, {
+      headers: {
+        Authorization: `bearer ${accessToken}`
+      }
+    })
+    .then( () => {
+      loadData();
+    })
+    .catch( (err) => {
+      console.log(err);
+    })
+
     toggleJoinModal();
   }
 
@@ -144,9 +178,9 @@ const Home = () => {
           <AddBtn onPress={() => handleAddBtnPress()} />
         </View>
 
-        <CreateModule visible={createModalVisible} onClose={handleCreateModalSubmit} />
+        <CreateModule visible={createModalVisible} onClose={toggleCreateModal} onSubmit={handleCreateModalSubmit} />
 
-        <JoinModule visible={joinModalVisible} onClose={handleJoinModalSubmit} />
+        <JoinModule visible={joinModalVisible} onClose={toggleJoinModal} onSubmit={handleJoinModalSubmit} />
 
       </View>
     

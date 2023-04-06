@@ -63,8 +63,25 @@ const Module = ({ route }) => {
   const handleModalSubmit = (title, body) => {
     setSectionTitle(title);
     setSectionBody(body);
-    console.log("title: " + title);
-    console.log("body: " + body);
+
+    const data = {
+      title: title,
+      body: body,
+      moduleId: moduleId
+    }
+    
+    axios.post(`${BASE_URL}/module/create-section`, data, {
+      headers: {
+        Authorization: `bearer ${accessToken}`
+      }
+    })
+    .then( () => {
+      loadData();
+    })
+    .catch( (err) => {
+      console.log(err);
+    })
+
     toggleModal();
   }
 
@@ -104,7 +121,7 @@ const Module = ({ route }) => {
         null
       }
 
-      <CreateSection visible={modalVisible} onClose={handleModalSubmit} />
+      <CreateSection visible={modalVisible} onClose={toggleModal} onSubmit={handleModalSubmit} />
 
     </View>
   )
