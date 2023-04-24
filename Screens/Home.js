@@ -190,7 +190,6 @@ const Home = () => {
 
         
 
-        
 
         <ScrollView 
           contentContainerStyle={{flexGrow: 1}}

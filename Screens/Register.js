@@ -6,6 +6,40 @@ import SelectDropdown from 'react-native-select-dropdown'
 import { BASE_URL } from '../config';
 import axios from 'axios';
 
+import * as localization from 'expo-localization'
+import { I18n } from 'i18n-js';
+
+
+const translations = {
+
+    en: {
+      Role: "Role",
+      Username:"Username",
+      Password:"Password",
+      Register:"Register",
+      Alreadyhaveanaccount:"Already have an account?",
+      Login:"Login"
+
+
+    },
+  
+    ja: {
+      Role: "役割",
+      Username:"ユーザー名",
+      Password:"パスワード",
+      Register:"登録",
+      Alreadyhaveanaccount:"すでにアカウントをお持ちですか?",
+      Login:"ログイン" 
+  
+    }
+  }
+
+const i18n =  new I18n(translations);
+
+i18n.locale = localization.locale;
+  
+i18n.enableFallback = true;
+
 const Register = ({navigation}) => {
 
     const [role, setRole] = useState(0);
@@ -14,6 +48,13 @@ const Register = ({navigation}) => {
     const roles = [ "Student", "Teacher" ]
 
     const {Register} = useContext(AuthContext)
+
+    const [locale, setLocale] = useState(i18n.locale)
+
+    const changeLocale = (locale) => {
+      i18n.locale = locale;
+      setLocale(locale)
+    }
 
     const HandleRegister = async (username, password, role) => {
       const data = {
@@ -41,6 +82,10 @@ const Register = ({navigation}) => {
 
       <Image style={styles.image} source={require("../assets/sh-logo-transparent.png")} />
 
+      <Text style={{textAlign:"center", alignContent:"center", alignItems:"center"}}>
+      {i18n.t('Username')}
+        </Text>
+
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
@@ -51,6 +96,9 @@ const Register = ({navigation}) => {
       </View>
 
       <View>
+        <Text style={{textAlign:"center", alignContent:"center", alignItems:"center"}}>
+        {i18n.t('Role')}
+        </Text>
         <SelectDropdown
           data={roles}
           buttonStyle={styles.inputView}
@@ -66,6 +114,11 @@ const Register = ({navigation}) => {
         />
       </View>
 
+      
+        <Text style={{textAlign:"center", alignContent:"center", alignItems:"center"}}>
+        {i18n.t('Password')}
+        </Text>
+
       <View style={styles.inputView}>
         <TextInput 
           style={styles.TextInput}
@@ -78,17 +131,35 @@ const Register = ({navigation}) => {
 
       <TouchableOpacity style={styles.registerBtn}
         onPress={() => HandleRegister(username, password, role)}>
-        <Text style={styles.registerText}>Register</Text>
+        <Text style={styles.registerText}>{i18n.t('Register')}</Text>
       </TouchableOpacity>
 
-      <Text>Already have an account?</Text>
+      <Text>{i18n.t('Alreadyhaveanaccount')}</Text>
       <View>
         <Pressable onPress={() =>{
               navigation.navigate("Login")
             }}>
-                <Text>Login</Text>
+                <Text>{i18n.t('Login')}</Text>
         </Pressable>
       </View>
+
+      <View style={{ flexDirection: "row", alignContent: "center", alignItems: "center", alignSelf: "center" }}>
+                    <TouchableOpacity onPress={() => changeLocale('ja')}>
+                        <Text>
+                            Japanese
+                        </Text>
+                    </TouchableOpacity>
+
+
+
+                    <TouchableOpacity onPress={() => changeLocale('en')}>
+                        <Text>
+                            English
+                        </Text>
+                    </TouchableOpacity>
+
+                </View>
+
       
     </View>
   )
@@ -119,7 +190,7 @@ const styles = StyleSheet.create({
   image: {
     width: "60%",
     resizeMode: "contain",
-    height: 150
+    height: 120
   },
   container: {
     flex: 1,
