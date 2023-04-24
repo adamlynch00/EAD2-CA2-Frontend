@@ -13,6 +13,28 @@ import { BASE_URL } from '../config';
 import CreateModule from '../components/CreateModule.js';
 import JoinModule from '../components/JoinModule.js';
 
+import * as localization from 'expo-localization'
+import { I18n } from 'i18n-js';
+
+
+const translations = {
+
+  en: {
+    Signout:"Sign out"
+  },
+
+  ja: {
+    Signout:"サインアウト" 
+
+  }
+}
+
+const i18n =  new I18n(translations);
+
+i18n.locale = localization.locale;
+
+i18n.enableFallback = true;
+
 const Home = () => {
   const[accessToken, setAccessToken] = useState('');
   const[role, setRole] = useState('');
@@ -24,6 +46,13 @@ const Home = () => {
   const [moduleId, setModuleId] = useState('');
 
   const navigation = useNavigation();
+
+  const [locale, setLocale] = useState(i18n.locale)
+
+  const changeLocale = (locale) => {
+      i18n.locale = locale;
+      setLocale(locale)
+    }
 
   useEffect(() => {
     loadData();
@@ -161,6 +190,8 @@ const Home = () => {
 
         
 
+        
+
         <ScrollView 
           contentContainerStyle={{flexGrow: 1}}
           keyboardShouldPersistTaps='handled'
@@ -184,6 +215,8 @@ const Home = () => {
         <CreateModule visible={createModalVisible} onClose={toggleCreateModal} onSubmit={handleCreateModalSubmit} />
 
         <JoinModule visible={joinModalVisible} onClose={toggleJoinModal} onSubmit={handleJoinModalSubmit} />
+
+        
 
       </View>
     

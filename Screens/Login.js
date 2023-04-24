@@ -10,11 +10,19 @@ import { I18n } from 'i18n-js';
 const translations = {
 
   en: {
-    login: "login"
+    login: "login",
+    Username: "Username",
+    Password: "Password",
+    Donthaveanaccount: "Dont have an account",
+    Register: "Register"
   },
 
   ja: {
-    login: "ログイン",  
+    login: "ログイン",
+    Username: "ユーザー名",
+    Password: "パスワード",
+    Donthaveanaccount: "アカウントを持っていない?",
+    Register: "登録"  
 
   }
 }
@@ -78,6 +86,9 @@ const Login = () => {
         <Image style={styles.image} source={require("../assets/sh-logo-transparent.png")} />
 
         <View style={styles.inputView}>
+          <Text>
+          {i18n.t('Username')}
+          </Text>
           <TextInput
             style={styles.TextInput}
             value={username}
@@ -87,6 +98,9 @@ const Login = () => {
         </View>
 
         <View style={styles.inputView}>
+        <Text>
+        {i18n.t('Password')}
+          </Text>
           <TextInput
             style={styles.TextInput}
             value={password}
@@ -102,12 +116,12 @@ const Login = () => {
           <Text style={styles.loginText}>{i18n.t('login')}</Text>
         </TouchableOpacity>
 
-        <Text>Dont have an account?</Text>
+        <Text>{i18n.t('Donthaveanaccount')}</Text>
         <View>
           <Pressable onPress={() => {
             navigation.navigate("Register")
           }}>
-            <Text>Register</Text>
+            <Text>{i18n.t('Register')}</Text>
 
           </Pressable>
         </View>
@@ -115,20 +129,20 @@ const Login = () => {
         <View>
           <TouchableOpacity onPress={() => changeLocale('ja')}>
             <Text>
-              Language japanese
+              Japanese
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        <View>
+          <TouchableOpacity onPress={() => changeLocale('en')}>
+            <Text>
+              English
             </Text>
           </TouchableOpacity>
         </View>
 
         
-      </View>
-
-      <View>
-        <Text>
-        {i18n.t('login')}
-
-        </Text>
-      
       </View>
 
     </Suspense>

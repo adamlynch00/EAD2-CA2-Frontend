@@ -5,6 +5,28 @@ import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect } from 'react';
 
+import * as localization from 'expo-localization'
+import { I18n } from 'i18n-js';
+import SelectDropdown from 'react-native-select-dropdown';
+
+const translations = {
+
+    en: {
+      Signout:"Sign out"
+    },
+  
+    ja: {
+      Signout:"サインアウト" 
+  
+    }
+  }
+
+const i18n =  new I18n(translations);
+
+i18n.locale = localization.locale;
+  
+i18n.enableFallback = true;
+
 const MyHeader = () => {
    
     const navigation = useNavigation();
@@ -15,6 +37,13 @@ const MyHeader = () => {
         navigation.navigate("Login");
     }
 
+    const [locale, setLocale] = useState(i18n.locale)
+
+    const changeLocale = (locale) => {
+      i18n.locale = locale;
+      setLocale(locale)
+    }
+
     
 
     
@@ -23,10 +52,36 @@ const MyHeader = () => {
 
             <Image style={styles.image} source={require("../assets/sh-logo-white-transparent.png")} />
 
+            
+
+                <View style={{ flexDirection: "column", alignContent: "center", alignItems: "center", alignSelf: "center" }}>
+                    <TouchableOpacity onPress={() => changeLocale('ja')}>
+                        <Text>
+                            Japanese
+                        </Text>
+                    </TouchableOpacity>
+
+
+
+                    <TouchableOpacity onPress={() => changeLocale('en')}>
+                        <Text>
+                            English
+                        </Text>
+                    </TouchableOpacity>
+
+                </View>
+
+            
+        
+
             <TouchableOpacity style={styles.signOutBtn} onPress={handleLogOut}>
-                <Text style={styles.signOutText}>Sign out</Text>
+                <Text style={styles.signOutText}>{i18n.t('Signout')}</Text>
                 <Icon style={styles.signOutIcon} name="log-out-outline" size={30} color="#FFF" />
             </TouchableOpacity>
+
+            
+
+            
 
             
 
