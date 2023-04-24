@@ -15,19 +15,27 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.adamlynch123.EAD2CA2"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.adamlynch123.EAD2CA2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-localization"
-    ]
+      "expo-localization",
+      "@config-plugins/detox"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "f61511ce-6aa3-4638-81c2-86128666cfdf"
+      }
+    }
   }
 }

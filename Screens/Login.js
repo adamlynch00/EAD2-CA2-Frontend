@@ -120,6 +120,7 @@ const Login = () => {
         <View>
           <Pressable onPress={() => {
             navigation.navigate("Register")
+            testID="register-button"
           }}>
             <Text>{i18n.t('Register')}</Text>
 
