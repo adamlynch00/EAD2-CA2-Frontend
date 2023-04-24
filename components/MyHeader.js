@@ -1,26 +1,34 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useEffect } from 'react';
 
 const MyHeader = () => {
+   
     const navigation = useNavigation();
+    
 
     const handleLogOut = async () => {
         await AsyncStorage.clear();
         navigation.navigate("Login");
     }
 
+    
+
+    
     return (
         <View style={styles.container}>
 
             <Image style={styles.image} source={require("../assets/sh-logo-white-transparent.png")} />
 
             <TouchableOpacity style={styles.signOutBtn} onPress={handleLogOut}>
-                <Text style={styles.signOutText}>Sign Out</Text>
+                <Text style={styles.signOutText}>Sign out</Text>
                 <Icon style={styles.signOutIcon} name="log-out-outline" size={30} color="#FFF" />
             </TouchableOpacity>
+
+            
 
         </View>
     );

@@ -1,10 +1,29 @@
 import { Image, StyleSheet, Text, TextInput, TouchableOpacity, View, Pressable } from 'react-native'
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, Suspense } from 'react'
 import { useNavigation } from '@react-navigation/native'
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BASE_URL } from '../config';
+import * as localization from 'expo-localization'
+import { I18n } from 'i18n-js';
 
+const translations = {
+
+  en: {
+    login: "login"
+  },
+
+  ja: {
+    login: "ログイン",  
+
+  }
+}
+
+const i18n =  new I18n(translations);
+
+i18n.locale = localization.locale;
+
+i18n.enableFallback = true;
 
 const Login = () => {
     const [username, setUsername] = useState(null);
@@ -12,8 +31,20 @@ const Login = () => {
     const [accessToken, setAccessToken] = useState('');
     const [role, setRole] = useState('');
 
-    const navigation = useNavigation();
+    const [locale, setLocale] = useState(i18n.locale)
 
+    const changeLocale = (locale) => {
+      i18n.locale = locale;
+      setLocale(locale)
+    }
+
+    
+
+    
+    const navigation = useNavigation();
+    
+
+   
     const HandleLogin = async (username, password) => {
       const data = {
           "username": username,
@@ -41,44 +72,66 @@ const Login = () => {
     }
 
   return (
-    <View style={styles.container}>
+    <Suspense fallback={null}>
+      <View style={styles.container}>
 
-      <Image style={styles.image} source={require("../assets/sh-logo-transparent.png")} />
+        <Image style={styles.image} source={require("../assets/sh-logo-transparent.png")} />
 
-      <View style={styles.inputView}>
-        <TextInput 
-          style={styles.TextInput}
-          value={username} 
-          placeholder='Enter username'
-          onChangeText={text => setUsername(text)}
-        />
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            value={username}
+            placeholder='Enter username'
+            onChangeText={text => setUsername(text)}
+          />
+        </View>
+
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.TextInput}
+            value={password}
+            placeholder='Enter Password'
+            onChangeText={text => setPassword(text)}
+            secureTextEntry
+          />
+        </View>
+
+        <TouchableOpacity style={styles.loginBtn}
+          onPress={() => HandleLogin(username, password)}>
+
+          <Text style={styles.loginText}>{i18n.t('login')}</Text>
+        </TouchableOpacity>
+
+        <Text>Dont have an account?</Text>
+        <View>
+          <Pressable onPress={() => {
+            navigation.navigate("Register")
+          }}>
+            <Text>Register</Text>
+
+          </Pressable>
+        </View>
+
+        <View>
+          <TouchableOpacity onPress={() => changeLocale('ja')}>
+            <Text>
+              Language japanese
+            </Text>
+          </TouchableOpacity>
+        </View>
+
+        
       </View>
 
-      <View style={styles.inputView}>
-        <TextInput 
-          style={styles.TextInput}
-          value={password} 
-          placeholder='Enter Password' 
-          onChangeText={text => setPassword(text)}
-          secureTextEntry
-        />
-      </View>
-      
-      <TouchableOpacity style={styles.loginBtn}
-        onPress={() => HandleLogin(username, password)}>
-        <Text style={styles.loginText}>Login</Text>
-      </TouchableOpacity>
-
-      <Text>Dont have an account?</Text>
       <View>
-        <Pressable onPress={() =>{
-              navigation.navigate("Register")
-            }}>
-                <Text>Register</Text>
+        <Text>
+        {i18n.t('login')}
 
-        </Pressable>
+        </Text>
+      
       </View>
-    </View>
+
+    </Suspense>
   )
 }
 

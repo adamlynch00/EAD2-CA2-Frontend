@@ -14,9 +14,10 @@ export const AuthProvider = ({children}) => {
             role: role
         }
 
-        axios.post(`http://10.0.2.2:3000/api/auth/register`, data)
+        axios.post(`http://studenthub.azurewebsites.net/api/auth/register`, data)
             .then( (res) => {
                 console.log(res);
+                console.log('success')
                 
             })
             .catch( (err) => {

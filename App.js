@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, {Suspense} from 'react'
 import Navigation from './components/Navigation'
 import { AuthProvider } from './context/AuthContext'
 
@@ -8,9 +8,13 @@ import { AuthProvider } from './context/AuthContext'
 const App = () => {
   return (
 
-    <AuthProvider>
-      <Navigation/>
-    </AuthProvider>
+    <Suspense>
+
+      <AuthProvider>
+        <Navigation />
+      </AuthProvider>
+
+    </Suspense>
   )
 }
 

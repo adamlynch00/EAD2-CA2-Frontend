@@ -26,11 +26,13 @@ const Register = ({navigation}) => {
           .then( (res) => {
               if (res.status === 201) {
                 console.log(res.data);
+                console.log('success')
                 navigation.navigate("Login")
               }
           })
           .catch( (err) => {
               console.log(err.response.data);
+              console.log(`error`, err)
           });
     }
   

@@ -159,10 +159,13 @@ const Home = () => {
 
         <MyHeader />
 
+        
+
         <ScrollView 
           contentContainerStyle={{flexGrow: 1}}
           keyboardShouldPersistTaps='handled'
         >
+          
           <View style={styles.modulesWrapper}>
             <View style={styles.modules}>
               {modules.map((item, index) => (

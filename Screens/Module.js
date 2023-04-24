@@ -104,6 +104,7 @@ const Module = ({ route }) => {
     <View style={styles.container}>
 
       <MyHeader />
+      
 
       <ScrollView 
           contentContainerStyle={{flexGrow: 1}}
