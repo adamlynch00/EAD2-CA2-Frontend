@@ -28,26 +28,7 @@ if [[ "$EAS_BUILD_RUNNER" == "eas-build" && "$EAS_BUILD_PROFILE" == "test"* ]]; 
       libgl1 \
       pulseaudio \
       socat \
-      @react-native-async-storage/async-storage \
-    @react-navigation/native \
-    @react-navigation/native-stack \
-    axios\
-    cors\
-    expo\
-    expo-localization\
-    expo-status-bar \
-    express \
-    i18n-js \
-    i18next \
-    i18next-browser-languagedetector \
-    i18next-http-backend \
-    react \
-    react-i18next \
-    react-native \
-    react-native-safe-area-context \
-    react-native-screens \
-    react-native-select-dropdown \
-    react-native-vector-icons \
+      
 
     # Emulator must be API 31 -- API 32 and 33 fail due to https://github.com/wix/Detox/issues/3762
     sdkmanager --install "system-images;android-31;google_apis;x86_64"

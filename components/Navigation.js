@@ -19,7 +19,7 @@ const Navigation = () => {
           <Stack.Screen name ="Home" component={Home}></Stack.Screen>   
           <Stack.Screen name ="Register" component={Register}></Stack.Screen> 
           <Stack.Screen name ="Module" component={Module}></Stack.Screen> 
-          
+ 
         </Stack.Navigator>
     </NavigationContainer>
   )

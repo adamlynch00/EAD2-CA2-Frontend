@@ -1,8 +1,15 @@
 /** @type {Detox.DetoxConfig} */
 module.exports = {
-  logger: {
-    level: process.env.CI ? 'debug' : undefined,
+  apps: {
+    'android.debug': {
+      type: 'android.apk',
+      binaryPath: 'android/app/build/outputs/apk/debug/app-debug.apk',
+      build: 'cd android && ./gradlew assembleDebug assembleAndroidTest -DtestBuildType=debug'
+    },
+    // ...
   },
+  // ...
+
   testRunner: {
     $0: 'jest',
     args: {
@@ -18,26 +25,26 @@ module.exports = {
   },
   apps: {
     
-    'android.release': {
+    'android.debug': {
       type: 'android.apk',
       build:
         'cd android && ./gradlew :app:assembleRelease :app:assembleAndroidTest -DtestBuildType=release && cd ..',
-      binaryPath: 'android/app/build/outputs/apk/release/app-release.apk',
+      binaryPath: 'android/app/build/outputs/apk/debug/app-debug.apk',
     },
   },
-  
-    emulator: {
-      type: 'android.emulator',
-      device: {
-        avdName: 'pixel_4',
-      },
-    },
+
+  "devices": {
+    "emulator": {
+        "type": "android.emulator", // or "android.emulator", or etc...
+         "device": { "avdName": "Pixel_4_API_30" }, // or e.g.: { "avdName": "Pixel_API_29" }
+       }
+     },
   
   configurations: {
     
-    'android.release': {
+    'android.emu.debug': {
       device: 'emulator',
-      app: 'android.release',
+      app: 'android.debug',
     },
   },
 };

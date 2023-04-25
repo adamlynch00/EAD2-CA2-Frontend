@@ -127,21 +127,27 @@ const Login = () => {
           </Pressable>
         </View>
 
-        <View>
-          <TouchableOpacity onPress={() => changeLocale('ja')}>
+        <View style={{paddingTop:10}}>
+          <TouchableOpacity 
+          onPress={() => changeLocale('ja')}
+          testID='language-button'>
             <Text>
               Japanese
             </Text>
           </TouchableOpacity>
         </View>
 
-        <View>
-          <TouchableOpacity onPress={() => changeLocale('en')}>
+        <View >
+          <TouchableOpacity 
+          testID='language-button-eng'
+          onPress={() => changeLocale('en')}>
             <Text>
               English
             </Text>
           </TouchableOpacity>
         </View>
+
+        
 
         
       </View>
